@@ -18,9 +18,12 @@ resource "aws_cloudwatch_metric_alarm" "my-cw" {
   metric_name         = "RequestCount"
   namespace           = "AWS/ApplicationELB"
   period              = 60
-  statistic           = "SampleCount"
+  statistic           = "Maximum"
   threshold           = 100
-  alarm_description   = "Total request exceeds 100"
+  alarm_description   = "Total request exceeded 100"  
   alarm_actions       = [aws_sns_topic.cw-alert.arn]
+  dimensions = {
+    LoadBalancer = aws_lb.my-lb.arn_suffix
+  }
   depends_on          = [aws_lb.my-lb]
 }
