@@ -3,7 +3,7 @@ resource "aws_launch_template" "my-lt" {
   name          = "my-lt"
   image_id      = "ami-0a7abae115fc0f825"
   instance_type = "t2.micro"
-  key_name      = "nn-terraform"
+  key_name      = aws_key_pair.my-key-pair.key_name
   user_data     = filebase64("./user_data.sh")
 
   iam_instance_profile {
